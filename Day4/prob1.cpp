@@ -13,11 +13,11 @@ vector<int> get_intervals(string *line) {
     int begin = 0;
     for (int i=0;i<line->size();i++) {
         if ((*line)[i] == ',' | (*line)[i] == '-') {
-            a.push_back(stoi((*line).substr(begin,i-begin)));
+            a.push_back(stoi(line->substr(begin,i-begin)));
             begin = i+1;
         }
         else if (i == line->size()-1) {
-            a.push_back(stoi((*line).substr(begin,i-begin+1)));
+            a.push_back(stoi(line->substr(begin,i-begin+1)));
         }
     }
     return a;
