@@ -6,6 +6,9 @@
         "vector": "cpp",
         "ostream": "cpp",
         "deque": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "xtree": "cpp",
+        "stack": "cpp",
+        "map": "cpp"
     }
 }

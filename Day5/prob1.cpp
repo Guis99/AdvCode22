@@ -8,10 +8,19 @@
 
 using namespace std;
 
+void modify(deque<char> *x[9], int move, int from, int to) {
+    vector<char> temp;
+    for (int i = 0; i<move; i++) {
+        x[to-1]->push_front(x[from-1]->front());
+        x[from-1]->pop_front();
+    }
+    temp.clear();
+}
+
 void get_score(string filename) {
     string myText;
-
     ifstream MyReadFile(filename);
+
     deque<char> *x[9];
     for (int i=0;i<9;i++) {
         deque<char>* el = new deque<char>;
@@ -23,10 +32,8 @@ void get_score(string filename) {
             int index = 1+4*i;
             if (isupper(myText[index])) {
                 x[i]->push_back(myText[index]); 
-                cout<<i<<myText[index]<<x[i]->back();
             }
         } 
-        cout<<endl;
     }
   
     getline (MyReadFile, myText);
@@ -34,13 +41,7 @@ void get_score(string filename) {
     while (getline (MyReadFile, myText)) {
         int move,from,to;
         sscanf(myText.c_str(), "move %d from %d to %d", &move,&from,&to);
-        
-        vector<char> temp;
-        for (int i = 0; i<move; i++) {
-            x[to-1]->push_front(x[from-1]->front());
-            x[from-1]->pop_front();
-        }
-        temp.clear();
+        modify(x,move,from,to);
     }   
 
     MyReadFile.close();
