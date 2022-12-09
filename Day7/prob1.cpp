@@ -11,6 +11,7 @@ struct Directory {
     string name;
     Directory *parent;
     map<string,Directory*> children;
+    map<string,int> files;
     Directory(string b, Directory *par=NULL) {
         name = b;
         parent = par;
@@ -24,7 +25,7 @@ void get_score(string filename) {
     Directory *curr = new Directory("/");
     Directory *root = curr;
     vector<Directory*> all{curr};
-
+    int num_files = 0;
     getline (MyReadFile, nl);
     while (getline (MyReadFile, nl)) {
         if (nl.substr(0,3) == "dir") {
@@ -44,13 +45,17 @@ void get_score(string filename) {
         }
 
         else if (nl[0] != '$') {
-            int a;
-            sscanf(nl.c_str(), "%d ", &a);
-            Directory *par = curr;
-            while (par != NULL) {
-                par->size += a;
-                par = par->parent;
-            }
+            int a; char filename[30];
+            sscanf(nl.c_str(), "%d %s", &a, filename);
+            if (curr->files.find(filename) == curr->files.end()) {
+                curr->files[filename] = a;
+                Directory *par = curr;
+                num_files ++;
+                while (par != NULL) {
+                    par->size += a;
+                    par = par->parent;
+                }
+            }  
         }
     }
 
@@ -66,7 +71,7 @@ void get_score(string filename) {
         }
     }
     cout<<total<<endl;
-    cout<<total2<<endl;
+    cout<<total2<<endl<<num_files<<endl<<all.size();
 }
   
 // Driver Code
